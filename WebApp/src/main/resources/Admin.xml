@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "..//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.multipart.saveDir" value="javax.servlet.context.tempdir" />
+<package name="myadmin" namespace="/myadmin" extends="struts-default,json-default">
+<interceptors>
+			<interceptor name="loadpage" class="Interceptor.WebLoading"></interceptor>
+			<interceptor name="clearcache" class="Interceptor.ClearCache"></interceptor>
+		</interceptors>
+	
+		<action name="admin" class="Action.AdminAction">
+			<result name="login">/AdminPage.jsp</result>
+			<result name="error">/HomePage.jsp</result>
+			<result name="exec">/UserNoExist.jsp</result>
+			<!-- <result name="fatal">/Error.jsp</result> -->
+		</action>
+		<action name="help" class ="Action.AdminAction" method="help">
+		<!-- <interceptor-ref name="loadpage"/> -->
+			<result name="success">/HelpAdmin.jsp</result>
+			<result name="klogin">/KindlyLogin.jsp</result>
+			<result name="error">/Error.jsp</result>
+		</action>
+		<action name="logout" class="Action.AdminAction" method="logout">
+		<interceptor-ref name="clearcache"/>
+                <result name="success" type="redirect">/HomePage.jsp</result>
+        </action>
+		<action name="addproducts" class="Action.AdminAction" method ="addAdminProduct">
+		<!-- <interceptor-ref name="loadpage"/> -->
+			<result name="success">/AddProduct.jsp</result>
+			<result name="klogin">/KindlyLogin.jsp</result>
+			<result name="error">/Error.jsp</result>
+		</action>
+		<action name="addaddAdminProduct" class="Action.AdminAction" method ="addaddAdminProduct">
+		</action>
+		<action name ="deleteproduct" class ="Action.AdminAction" method ="deleteproduct">
+		</action>
+		<action name ="fetchproducts" class ="Action.AdminAction" method="fetchProducts">
+			
+		</action>
+		<action name="networkDetails" class="Action.UserAction" method="networkDetails">
+		<!-- <interceptor-ref name="loadpage"/> -->
+			<result name="success">/AllNetworks.jsp</result>
+			<result name="klogin">/KindlyLogin.jsp</result>
+			<result name="error">/Error.jsp</result>
+		</action>
+		<action name="allnetworks" class="Action.NetworkAction" method="allnetworks">
+			<result type="json"/>
+		</action>
+		<action name="manageuser" class="Action.AdminAction" method="manageUser">
+		<!-- <interceptor-ref name="loadpage"/> -->
+			<result name="success">/ManageUser.jsp</result>
+			<result name="klogin">/KindlyLogin.jsp</result>
+			<result name="error">/Error.jsp</result>
+		</action>
+		<action name="savedata" class="Action.AdminAction" method="savedata">
+		</action>
+		<action name="imageload" class="Action.AdminAction" method="imageload">
+		<interceptor-ref name="fileUpload">
+			<param name="maximumSize">20971522</param>
+            <param name="allowedTypes">image/png,image/gif,image/jpeg,image/pjpeg</param>
+         </interceptor-ref>
+         <interceptor-ref name="defaultStack"></interceptor-ref>
+         <result name="success">/ManageUser.jsp</result>
+         <result name="error">/Error.jsp</result>
+		</action>
+		<action name="deletedata" class="Action.AdminAction" method="deletedata">
+		</action>
+		<action name="updatedata" class="Action.AdminAction" method="updatedata">
+		</action>
+		<action name="tabledata" class="Action.AdminAction" method="tabledata">
+				<result type="json" />
+		</action>
+		<action name="getmacaddress" class="Action.AdminAction" method="getmacaddress">
+			<result type="json"/>
+		</action>
+		<action name="manageproducts" class="Action.AdminAction" method="manageproducts">
+			<result type="json"/>
+		</action>
+		<action name="productid" class="Action.AdminAction" method="productid">
+		</action>
+		<action name="sensortb" class="Action.AdminAction" method="sensortb">
+			<result type="json"/>
+		</action>
+		<action name="userproductdelete" class="Action.AdminAction" method="userproductdelete">
+		<result name="success">/ManageUser.jsp</result>
+		<result name="error">/Error.jsp</result>
+		</action>
+		<action name="useraddproduct" class="Action.AdminAction" method="useraddproduct">
+			<result name="success">/ManageUser.jsp</result>
+			<result name="error">/Error.jsp</result>
+		</action>
+		
+	</package>
+</struts>
