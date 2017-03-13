@@ -24,6 +24,7 @@ var flag1="";
 var flag2="";
 var flag3="";
 var flag4="";
+var nname = "";
 var networktb,networkjoin,networkdata,myreq,mymembers;
 var removenname;
 var uname="";
@@ -34,7 +35,7 @@ app.controller('mainController',function($scope,$http){
 			       $scope.networktb      = data;
 			       networktb = data;
 			   	   if(networktb.length >0 )
-			   		 uname = networktb[0].ownername;
+			   		 uname = networktb[0].email;
 
 		        }).error(function(data, status, headers, config){});	
 	$http.get("myaccount/networkdata").success(
@@ -51,19 +52,35 @@ app.controller('networkController',function($scope,$http){
 			       $("#pending td").parent().remove();
 			       $(document).ready(function(){
 						for(var t=0;t<networkjoin.length;t++){
-									var ut="'"+networkjoin[t].nname+"'"
-									$("#pending").append("<input type='hidden' id='nname' value='"+networkjoin[t].networkname+"' />");
-			      					$("#pending").append("<input type='hidden' id='requestee' value='"+networkjoin[t].connectorname+"' />");
-									$("#pending").append("<tr style='color:#FFE200;'><td>"+networkjoin[t].networkname+"</td><td>"+networkjoin[t].connectorname+"</td><td><input type='button' class='btn btn-success ' id='"+networkjoin[t].connectorname+" "+networkjoin[t].networkname+"' value='Approve' onclick='approve();'/>&nbsp;&nbsp;<input type='button' class='btn btn-danger ' id='c"+networkjoin[t].connectorname+" "+networkjoin[t].networkname+"' value='Cancel' onclick='cancel();' /></td></tr>");
+									var ut="'"+networkjoin[t].networkName+"'"
+									//alert(networkjoin[t].networkName);
+									var userarr = networkjoin[t].users;
+									if(userarr !== undefined){
+										//if(userarr !== ""){
+											if(userarr.length!=0){
+													//	alert("1");
+														for(var l=0;l<userarr.length;l++){
+														//	alert(userarr[l].status);
+															if(userarr[l].status === "false")
+															{
+																	$("#pending").append("<input type='hidden' id='nname' value='"+networkjoin[t].networkName+"' />");
+									      							$("#pending").append("<input type='hidden' id='requestee' value='"+userarr[l].email+"' />");
+																	$("#pending").append("<tr style='color:#FFE200;'><td>"+networkjoin[t].networkName+"</td><td>"+userarr[l].email+"</td><td><input type='button' class='btn btn-success ' id='"+userarr[l].email+" "+networkjoin[t].networkName+"' value='Approve' onclick='approve();'/>&nbsp;&nbsp;<input type='button' class='btn btn-danger ' id='c"+userarr[l].email+" "+networkjoin[t].networkName+"' value='Cancel' onclick='cancel();' /></td></tr>");
+															}
+														}
+										//			}
+										}
+									}
 						}$("#pending").hide();
 				       });
 				    }).error(function(data, status, headers, config){});
-		    $http.get("myaccount/reqstatus").success(
+		   /* $http.get("myaccount/reqstatus").success(
 				    function(data,status,headers,config){
 				    	$scope.myreq = data;
 				    	
-				    }).error(function(data,status,headers,config){});
+				    }).error(function(data,status,headers,config){});*/
 });
+
 app.controller('memberNetwork',function($scope,$http){
 	$http.get("myaccount/members").success(
 			function(data,status,headers,config){
@@ -87,7 +104,6 @@ $(document).ready(function(){
 	function deletedata(x){
 		var xt=document.getElementById("tdd");
 		var nname=x.substring(1);
-	//	alert(nname);
 	$.ajax({
 			url:"myaccount/deletenetwork",
 			type:'GET',
@@ -100,27 +116,21 @@ $(document).ready(function(){
 			});
 		}
 	function approve(){
-		//var x=$("#requestee").val();
-		//var y=$("#nname").val();
 		var x="",y="";
 		var e = window.event;
 		var btn = e.target || e.srcElement;
 		var t=btn.id;
-		//alert(t);
 		var arr = t.split(" ");
 		x = arr[0];
 		y = arr[1];
 		var tt=document.getElementById(t);
 		var tt2=document.getElementById("c"+t);
 		var xt="";
-	//	alert(x+"  "+y);
-	//	alert(tt.value);
 		if(tt.value==="Approve"){
-			//alert(tt.value);
 			tt.value="Approved";
 			tt.disabled = true;
 			tt2.disabled = true;
-			xt="Joined";
+			xt="true";
 		}
 		$.ajax({
 			url:"myaccount/changestatus",
@@ -141,7 +151,6 @@ $(document).ready(function(){
 	}
 	function savetimer(x){
 		var nname=x.substring(1);
-	//	alert($("#tb"+nname+"").val());
 		var val=$("#tb"+nname+"").val();
 		$.ajax({
 			url:"myaccount/timer",
@@ -168,12 +177,10 @@ $(document).ready(function(){
 		var u=document.getElementById(""+t+"").value;
 		var str = x+" "+y;
 		if(u==="Cancel"){
-			//alert("dm");
 			document.getElementById(""+t+"").value="Cancelled";
 			document.getElementById(""+t+"").disabled = true;
 			document.getElementById(""+str+"").disabled = true;
-			xt="Cancel";
-			//alert(x);
+			xt="false";
 			$.ajax({
 				url:"myaccount/changestatus",
 				type:'GET',
@@ -186,7 +193,6 @@ $(document).ready(function(){
 		}
 	}
 	function leavenetwork(x){
-		//(x);
 		$.ajax({
 			url : "myaccount/leavenetwork",
 			type : 'GET',
@@ -219,12 +225,10 @@ $(document).ready(function(){
 		var btn = e.target || e.srcElement;
 		var t=btn.id;
 		var xy=t.substring(2);
-		//alert(xy);
 		var arr = xy.split(" ");
 		var count =0 ;
-		//alert(arr[0]+" "+arr[1]);
 			for(var t=0;t<networkdata.length;t++){
-			if(networkdata[t].networkname === arr[1])
+			if(networkdata[t].name === arr[1])
 				count++;
 		}
 		if(count<10){
@@ -237,13 +241,21 @@ $(document).ready(function(){
 		}
 	}
 	function showdetails(x){
-		var nname=x.substring(1);
+		nname=x.substring(1);
 		removenname = nname;
 		$("#tbb td").parent().remove();
 		$("#viewmembers").modal('show');
 		for(var t=0;t<mymembers.length;t++){
-			if(mymembers[t].networkname === removenname){
-				$("#tbb").append("<tr><td>"+mymembers[t].connectorname+"</td><td><input type='button' class='btn btn-warning' value='remove' id='"+mymembers[t].connectorname+"' onclick='removeit();'/></tr>");					
+			if(mymembers[t].networkName===nname){
+				var userarr = mymembers[t].users;
+				if(userarr !== undefined){
+				 if(userarr.length!=0){
+						 for(var y=0;y<userarr.length;y++){
+							$("#tbb").append("<tr><td>"+userarr[y].name+"</td><td><input type='button' class='btn btn-warning' value='remove' id='"+userarr[y].email+"' onclick='removeit();'/></tr>");						
+					 }
+					}
+				}
+				
 			}
 		}
 	}
@@ -340,10 +352,10 @@ $(document).ready(function(){
 			<table  id="mmynetworks" ng-controller="mainController" class="table table-bordered table-stripped table-hover table-responsive" >
 			<tr style="color:grey;font-weight:bold;"><th>Network Name</th><th>Delete</th><th>Change Timer/Update Timer</th><th>Enter Timer Value</th><th>Show Network Members</th></tr>
 			<tr ng-repeat="x in networktb" style="color:#FFE200;">
-				    <c:set var="a" value="{{x.nname}}"/>
+				    <c:set var="a" value="{{x.networkName}}"/>
 				   
-					<td id="delbtn">{{x.nname}}
-					<input type="hidden" value="{{x.nname}}" id="tdd"/></td>
+					<td id="delbtn">{{x.networkName}}
+					<input type="hidden" value="{{x.networkName}}" id="tdd"/></td>
 					<td><input type="button" class="btn btn-danger" onclick="deletedata($(this).attr('id'));" id="d${a}" value="delete"/></td>
 					<td><input type="button" class="btn btn-default" onclick="changetimer($(this).attr('id'));" id="c${a}" value="Change Timer"/>
 					<input type="button" class="btn btn-success" onclick="savetimer($(this).attr('id'));" id="s${a}" value="Save" style="display:none;"/>
@@ -361,8 +373,10 @@ $(document).ready(function(){
 			<table  id="nnetworkjoined" class="table table-bordered table-stripped table-hover table-responsive" ng-controller="mainController"  >
 				<tr style="color:grey;font-weight:bold;"><th>Network Name</th><th>Leave Request</th></tr>
 				<tr ng-repeat="x in networkdata" style="color:#FFE200;">
-					<td>{{x.nname}}</td>
-					<td><input type="button" class="btn btn-primary" id="{{x.nname}}" value="Leave Network" onclick="leavenetwork($(this).attr('id'));	"/></td>
+					
+					<td>{{x.networkName}}</td>
+					<td><input type="button" class="btn btn-primary" id="{{x.networkName}}" value="Leave Network" onclick="leavenetwork($(this).attr('id'));	"/></td>
+					
 				</tr>
 			</table>
 		</div>

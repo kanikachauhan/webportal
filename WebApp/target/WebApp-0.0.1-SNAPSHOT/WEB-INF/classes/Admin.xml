@@ -7,66 +7,63 @@
 			<interceptor name="loadpage" class="Interceptor.WebLoading"></interceptor>
 			<interceptor name="clearcache" class="Interceptor.ClearCache"></interceptor>
 		</interceptors>
-	
+		<!--done -->
 		<action name="admin" class="Action.AdminAction">
 			<result name="login">/AdminPage.jsp</result>
 			<result name="error">/HomePage.jsp</result>
 			<result name="exec">/UserNoExist.jsp</result>
-			<!-- <result name="fatal">/Error.jsp</result> -->
 		</action>
+		<!--done -->
 		<action name="help" class ="Action.AdminAction" method="help">
-		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/HelpAdmin.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name="error">/Error.jsp</result>
 		</action>
+		<!--done -->
 		<action name="logout" class="Action.AdminAction" method="logout">
-		<interceptor-ref name="clearcache"/>
+				<interceptor-ref name="clearcache"/>
                 <result name="success" type="redirect">/HomePage.jsp</result>
         </action>
+        <!--done-->
 		<action name="addproducts" class="Action.AdminAction" method ="addAdminProduct">
-		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/AddProduct.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="addaddAdminProduct" class="Action.AdminAction" method ="addaddAdminProduct">
 		</action>
+		<!--done-->
 		<action name ="deleteproduct" class ="Action.AdminAction" method ="deleteproduct">
 		</action>
+		<!--done-->
 		<action name ="fetchproducts" class ="Action.AdminAction" method="fetchProducts">
-			
 		</action>
-		<action name="networkDetails" class="Action.UserAction" method="networkDetails">
-		<!-- <interceptor-ref name="loadpage"/> -->
+		<!--done-->
+		<action name="networkDetails" class="Action.AdminAction" method="networkDetails">
 			<result name="success">/AllNetworks.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="allnetworks" class="Action.NetworkAction" method="allnetworks">
 			<result type="json"/>
 		</action>
+		<!--done-->
 		<action name="manageuser" class="Action.AdminAction" method="manageUser">
-		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/ManageUser.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name="error">/Error.jsp</result>
 		</action>
 		<action name="savedata" class="Action.AdminAction" method="savedata">
 		</action>
-		<action name="imageload" class="Action.AdminAction" method="imageload">
-		<interceptor-ref name="fileUpload">
-			<param name="maximumSize">20971522</param>
-            <param name="allowedTypes">image/png,image/gif,image/jpeg,image/pjpeg</param>
-         </interceptor-ref>
-         <interceptor-ref name="defaultStack"></interceptor-ref>
-         <result name="success">/ManageUser.jsp</result>
-         <result name="error">/Error.jsp</result>
-		</action>
+		<!--done-->
 		<action name="deletedata" class="Action.AdminAction" method="deletedata">
 		</action>
+		<!--done-->
 		<action name="updatedata" class="Action.AdminAction" method="updatedata">
 		</action>
+		<!--done-->
 		<action name="tabledata" class="Action.AdminAction" method="tabledata">
 				<result type="json" />
 		</action>
@@ -85,6 +82,7 @@
 		<result name="success">/ManageUser.jsp</result>
 		<result name="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="useraddproduct" class="Action.AdminAction" method="useraddproduct">
 			<result name="success">/ManageUser.jsp</result>
 			<result name="error">/Error.jsp</result>

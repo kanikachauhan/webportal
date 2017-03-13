@@ -146,16 +146,17 @@ function generatepid(){
 }
 function check(){	
 	var t = document.getElementById("pid").value;
+	//alert(t);
 	var flag = false;
 	for(var tx=0;tx<productarr.length;tx++){
-		//alert(t+"  "+productarr[tx].pid);
-		if(t==productarr[tx].pid){
+		//alert(t+"  "+productarr[tx].productID);
+		if(t==productarr[tx].productID){
 			flag = true;
+			alert(flag);
 			break;
 		}		
 	} 
-	//alert(flag);
-	if(t == null || t == ""){
+	if(t == null || t == "" || flag == true){
 		$('#productAdd').submit(function (evt) {
 		    evt.preventDefault();
 		    $("#myModal").modal('show');
@@ -196,6 +197,7 @@ function showpop(x){
 function setFieldsEmpty(){
 	document.getElementById("pname").value  = "";
 	document.getElementById("pdesc").value = "";
+	document.getElementById("tpid").value = "";
 }
 </script>
 </head>
@@ -307,10 +309,10 @@ function setFieldsEmpty(){
     						</a>
     					</th>
 						<tr  ng-repeat="x in itemsdata| orderBy:sortType:sortReverse |filter:searchProduct">
-    					<td>{{x.pid}}</td>
+    					<td>{{x.productID}}</td>
     					<td>{{x.name}}</td>
     					<td>{{x.description}}</td>
-						<td><input type="button" class="btn" style="height:50px;background-color:#FFE251;color:black;font-weight:bold;" id="{{x.pid}}" name="{{x.pname}}" onclick="showpop($(this).attr('id'));" value="Delete Product"/></td>
+						<td><input type="button" class="btn" style="height:50px;background-color:#FFE251;color:black;font-weight:bold;" id="{{x.productID}}" name="{{x.pname}}" onclick="showpop($(this).attr('id'));" value="Delete Product"/></td>
 						</tr>
     			</table>
     		</form> 
@@ -380,33 +382,6 @@ function setFieldsEmpty(){
 <script type="text/javascript" src="${pageContext.request.contextPath}/org/staticcontent/jquery.popconfirm.js">
 		</script>	
 		<script type="text/javascript">
-	/*		$('.form').find('input, textarea').on('keyup blur focus', function (e) {
-  	var $this = $(this),
-      label = $this.prev('label');
-
-	  if (e.type === 'keyup') {
-			if ($this.val() === '') {
-          label.removeClass('active highlight');
-        } else {
-          label.addClass('active highlight');
-        }
-    } else if (e.type === 'blur') {
-    	if( $this.val() === '' ) {
-    		label.removeClass('active highlight'); 
-			} else {
-		    label.removeClass('highlight');   
-			}   
-    } else if (e.type === 'focus') {
-      
-      if( $this.val() === '' ) {
-    		label.removeClass('highlight'); 
-			} 
-      else if( $this.val() !== '' ) {
-		    label.addClass('highlight');
-			}
-    }
-
-});*/
 		</script>	
 	
 </body>

@@ -6,6 +6,7 @@
 			<interceptor name="loadpage" class="Interceptor.WebLoading"></interceptor>
 			<interceptor name="clearcache" class="Interceptor.ClearCache"></interceptor>
 		</interceptors>
+		<!--done -->
 		<action name="user" class="Action.UserAction" method="execute">
 			<result name="success">/UserPage.jsp</result>
 			<result name="error">/HomePage.jsp</result>
@@ -13,32 +14,48 @@
 			<result name="firsttime">/ChangePassword.jsp</result>
 			<result name="fatal">/Error.jsp</result>
 		</action>
-		<action name="ImageAction" class="Action.ImageAction" method="getImg"></action>
+		<!--fisr-->
+		<action name="getallnetworks" class="Action.NetworkAction" method="getallnetworks">
+			<result type="json"/>
+		</action>
+		<!--secodn-->
+		<action name="getownednetworksforcurrentuser" class="Action.NetworkAction" method="getownednetworksforcurrentuser">
+			<result type="json"/>
+		</action>
+		
+		<!--third-->
+		<action name="getjoinednetworksforcurrentuser" class="Action.NetworkAction" method="getjoinednetworksforcurrentuser">
+			<result type="json"/>
+		</action>
+		<!--done-->
 		<action name="network" class="Action.UserAction" method="networkDetails">
 			<result name="success">/NetworkDetails.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done -->
 		<action name="helps" class ="Action.UserAction" method="helps">
-		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/HelpUser.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done -->
 		<action name="logout" class="Action.AdminAction" method="logout">
-		<interceptor-ref name="clearcache"/>
+				<interceptor-ref name="clearcache"/>
                 <result name="success" type="redirect">/HomePage.jsp</result>
         </action>
+        <!--done-->
 		<action name="deletenetwork" class="Action.NetworkAction" method="deletenetwork">
-			<result name="success">/MyNetwork.jsp</result>
 		</action>
 		<action name="joinednetworkss" class="Action.NetworkAction" method="joinednetworkss">
 			<result type="json"/>
 		</action>
+		<!--done-->
 		<action name="fetchmyproducts" class="Action.UserAction" method="fetchmyproducts">
 			<result type="json"/>
 		</action>
 		<action name="extractproduct" class="Action.UserAction" method="extractproduct"></action>
+		<!--done-->
 		<action name="leavenetwork" class="Action.NetworkAction" method="leavenetwork"></action>
 		<action name="productDetails" class="Action.UserAction" method="productDetails">
 		<!-- <interceptor-ref name="loadpage"/> -->
@@ -51,75 +68,92 @@
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="userData" class="Action.UserAction" method="userData">
-		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/UserData.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="mynetwork" class="Action.NetworkAction" method="mynetwork">
 		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/MyNetwork.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="createnetwork" class="Action.NetworkAction" method="createnetwork">
-		<!-- <interceptor-ref name="loadpage"/> -->
 			<result name="success">/CreateNetwork.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="joinnetwork" class="Action.NetworkAction" method="joinnetwork">
-		<!-- <interceptor-ref name="loadpage"/> -->
+	
 			<result name="success">/JoinNetwork.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>
 			<result name ="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 	 <action name="extractuser" class="Action.UserAction" method="extractuser">
-			<result type="json" name="success">/test.jsp</result>
+			<result type="json"/>
 		</action>
+		<!--done-->
 		<action name="checknetworkid" class="Action.UserAction" method="checknetworkid">
 			<result type="json"/>
 		</action>
 		<action name="networknames" class="Action.NetworkAction" method="networknames">
 			<result type="json"/>
 		</action>
+		<!--done-->
 		<action name="checknetworknames" class="Action.UserAction" method="checknetworknames">
 			<result type="json"/>
 		</action>
+		<!--done-->
 		<action name="checknetworknumber" class="Action.UserAction" method="checknetworknumber">
 			<result type="json"/>
 		</action>
+		<!--done-->
 		<action name="update" class="Action.UserAction" method="changepassword">
 			<result name="success">/UserPage.jsp</result>
 			<result name="error">/ChangePassword.jsp</result>
+		</action>
+		<!--fourth-->
+		<action name="networkcreate" class="Action.UserAction" method="networkcreate">
 			
 		</action>
-		<action name="networkcreate" class="Action.UserAction" method="networkcreate">
-			<result name="enter">/CreateNetwork.jsp</result>
-		</action>
+		<!--done-->
 		<action name="request" class="Action.NetworkAction" method="request">
 			<result name="success" >/JoinNetwork.jsp</result>
 			<result name="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="changestatus" class="Action.NetworkAction" method="changestatus">
-		<result name="success">/MyNetwork.jsp</result>
-		<result name="error">/Error.jsp</result>
+			<result name="success">/MyNetwork.jsp</result>
+			<result name="error">/Error.jsp</result>
 		</action>
+		<!--done-->
 		<action name="networktb" class="Action.NetworkAction" method="networktb"></action>
+		<!--done-->
 		<action name="networkjoin" class="Action.NetworkAction" method="networkjoin"></action>
+		<!--done-->
 		<action name="networkdata" class="Action.NetworkAction" method="networkdata"></action>
+		<!--done-->
 		<action name="allnetworkdata" class="Action.NetworkAction" method="allnetworkdata"></action>
 		<action name="ownnetwork" class="Action.NetworkAction" method="ownnetwork"></action>
 		<action name="myjoinednetwork" class="Action.NetworkAction" method="myjoinednetwork"></action>
+		<!--done-->
 		<action name="timer" class="Action.NetworkAction" method="timer"></action>
 		<action name="mymembers" class="Action.NetworkAction" method="mymembers"></action>
+		<!--done-->
 		<action name="members" class="Action.NetworkAction" method="members"><result type="json"/></action>
+		<!--done-->
 		<action name="removeuser" class="Action.NetworkAction" method="removeuser"></action>
 		<action name="getuser" class="Action.NetworkAction" method="getuser">
 			<result type="json"/>
 		</action>
 		<action name="reqstatus" class="Action.NetworkAction" method="reqstatus"><result type="json"/></action>
+		<!--done-->
 		<action name="myproducts" class="Action.UserAction" method="showProducts">
 			<result name="success">/Products.jsp</result>
 			<result name="klogin">/KindlyLogin.jsp</result>

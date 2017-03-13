@@ -33,60 +33,14 @@ app.controller('mainController',function($scope,$http){
 		        function(data, status, headers, config) {
 			       $scope.arr      = data;
 			       jsonarr = data;
-			       $scope.fname = jsonarr[0].firstname;
-			       $scope.mname = jsonarr[0].middlename;
-			       $scope.lname = jsonarr[0].lastname;
-			       $scope.emailid = jsonarr[0].emailid;
+			      // alert(jsonarr);
+			       $scope.name = jsonarr[0].name;
+			       $scope.emailid = jsonarr[0].email;
 			       $scope.password = jsonarr[0].password;
 			       $scope.address = jsonarr[0].address;
-			       $scope.contactno = jsonarr[0].contactno;
-			       eid = jsonarr[0].emailid;
-			    /*   $scope.macaddress = '  ';
-			       for(var tt=0;tt<jsonarr.length;tt++)
-			    	   $scope.macaddress = $scope.macaddress + jsonarr[tt].macaddress+" ";
-			     */  			       
+			       $scope.contactno = jsonarr[0].phoneNumber;
+			      
 		        }).error(function(data, status, headers, config){});
-	$http.get("myaccount/extractproduct").success(
-			function(data,status,headers,config) {
-				$scope.macaddress = '';
-				tmac = data;
-				for(var t=0;t<tmac.length;t++)
-					$scope.macaddress = $scope.macaddress + tmac[t].macaddress+"    ";
-			}).error(function(data,status,headers,config){});
-	});
-app.controller('networkController',function($scope,$http){
-	$http.get("myaccount/ownnetwork").success(
-			function(data,status,headers,config){
-				var x='';
-				var y='';
-				var t=0;
-				for(t=0;t<data.length-1;t++)
-						x=x+data[t].nname+',';
-			//	alert(data[t].nname+" "+x);
-				x = x+data[t].nname;
-				//alert(x);
-				//x=x+data[t].name;					
-					$scope.networkarr = x;
-				//alert(x);
-				}).error(function(data,status,headers,config){});
-});
-app.controller('joinednetworkController',function($scope,$http){
-	$http.get("myaccount/myjoinednetwork").success(
-			function(data,status,headers,config){
-				var x='';
-				for(var t=0;t<data.length;t++)
-					x=x+data[i].nname;
-				$scope.joinednetwork = x;
-			}).error(function(data,status,headers,config){});
-});
-app.controller('joinednetworkController',function($scope,$http){
-	$http.get("myaccount/joinednetworkss").success(
-			function(data,status,headers,config){
-				var x='';
-				for(var t=0;t<data.length;t++)
-					x=x+data[i].nname;
-				$scope.joinednetwork = x;
-			}).error(function(data,status,headers,config){});
 });
 </script>
 <style type="text/css">
@@ -122,16 +76,8 @@ app.controller('joinednetworkController',function($scope,$http){
 		<center>
 			<table class="table table-hover table-responsive" id="details" name="details"   ng-controller="mainController">
 					<tr>
-						<td>First Name:</td>
-						<td>{{fname}}</td>
-					</tr>
-					<tr>
-						<td>Middle Name:</td>
-						<td>{{mname}}</td>
-					</tr>
-					<tr>
-						<td>Last Name:</td>
-						<td>{{lname}}</td>
+						<td>Name:</td>
+						<td>{{name}}</td>
 					</tr>
 					<tr>
 						<td>Email Id:</td>

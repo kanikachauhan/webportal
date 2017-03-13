@@ -14,83 +14,112 @@ try{
 	response.sendRedirect("/Error.jsp");
 }
 %> 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<META Http-Equiv="Cache-Control" Content="no-cache">
-<META Http-Equiv="Pragma" Content="no-cache">
-<META Http-Equiv="Expires" Content="0">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Alarm Connect</title>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<style type="text/css">
-.container-fluid{
- 	background-color:#1C1C18;
- }
- .jumbotron{
- 	background-color:#1C1C18;
- }
- .abcd{
- border:2px solid #FFE200;padding:150px;background-color:#242316;
- opacity:0.4;
- border-radius:10px;
- }
- .abcd:hover{
- 	opacity:1.0;
- }
- h1 {
-   color: #FFE200;
-   -webkit-text-fill-color: #1C1C18;
-   -webkit-text-stroke-width: 1px;
-   -webkit-text-stroke-color:#FFE200;
-   font-size: 30px;
-   font-style: italic;
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="javascript/Script.js"></script>
+<style>
+.w3-inner-color {
+	background-color: #242316 !important
+}
+
+.w3-text-custom {
+	color: #FFE200 !important
+}
+
+.abcd {
+	border: 2px solid #FFE200;
+	padding: 150px;
+	background-color: #242316;
+	color: #FFE200;
+	border-radius: 10px;
+}
+
+.w3-margin {
+	margin-left: 10
+}
+.w3-inner-color {
+	background-color: #242316 !important;
 }
 </style>
+<script>
+	// Script to open and close sidenav
+	function w3_open() {
+		document.getElementById("mySidenav").style.display = "block";
+	}
+
+	function w3_close() {
+		document.getElementById("mySidenav").style.display = "none";
+	}
+</script>
 </head>
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top" style="background: #1C1C18;">
-		<div class="container-fluid" style="background: #1C1C18;"> 	
-		<div class="navbar-header">
-			<ul class="nav navbar-nav">
-				<li><a href="${pageContext.request.contextPath}/AdminPage.jsp"><p style="color: white;font-weight:bold;">Home</p></a></li>
-				<li><a href="myadmin/logout" style="color:white;font-weight:bold;" >Log Out</a></li>
-			</ul>
-		</div>
-		</div>
-	</nav>
+<body style="background-color: #1C1C18;">
+<nav class="w3-sidenav w3-inner-color  w3-animate-left"
+		style="width:70px;display:none;z-index:2;" id="mySidenav"> <a
+		class="w3-padding-16" href="#" onclick="w3_close()"><i
+		class="fa fa-home w3-xxlarge w3-text-custom"></i></a> <a
+		class="w3-padding-16" href="#" onclick="w3_close()"><i
+		class="fa fa-user w3-xxlarge w3-text-custom"></i></a> </nav>
 <div class="container-fluid" style="background-color:#1C1C18;">
-	<div class="jumbotron">
-	</div>
-	
 		<center><h1>Welcome Admin</h1></center>
-	<div class="row">
-<div class="col-sm-6  " >
-				<center><a href="myadmin/manageuser"><span style="font-size:75px;color:#FFE200;"><i class="glyphicon glyphicon-user abcd"></i></span></a>
-				<br><br>
-				<h4 style="color:#FFE200;">Manage User</h4>
-				</center>
-			</div>
-			<div class="col-sm-6 ">
-				<center><a href="myadmin/addproducts"><span style="font-size:75px;color:#FFE200;"><i class="glyphicon glyphicon-th-list  abcd"></i></span></a>
-				<br><br>
-				<h4 style="color:#FFE200;">Manage Products</h4>
-				</center>
+	<div>
+		<div class="w3-top">
+			<div class="w3-white w3-xlarge w3-padding-xlarge w3-text-custom w3-inner-color "
+				>
+				<div class="w3-left w3-opennav fa fa-bars"
+					onclick="w3_open()"></div>
+				<div class="w3-center">Menu</div>
 			</div>
 		</div>
-		<div class="row">
-		<div class="col-sm-6">
-				<center><a href="myadmin/networkDetails"><span style="font-size:75px;color:#FFE200;"><i class="glyphicon glyphicon-globe  abcd"></i></span></a>
-				<br><br>
-				<h4 style="color:#FFE200;">Network Details</h4>
-				</center>
+		<div class="w3-center container-fluid" >
+			<div class="row" style="margin-top:10%;">
+				<div class="col-md-6">
+					<center><a href="myadmin/manageuser">
+						<span style="font-size: 75px;"><i
+							class="glyphicon glyphicon-user  abcd"></i></span></a>
+					</center>
+					<br><br>
+				<h4 style="color:#FFE200;">Manage User</h4>
+				</div>
+				<div class="col-md-6">
+					<center><a href="myadmin/addproducts">
+						<span style="font-size: 75px;"><i
+							class="glyphicon glyphicon-globe  abcd"></i></span></a>
+					</center>
+					<br><br>
+				<h4 style="color:#FFE200;">Manage Products</h4>
+				</div>
 			</div>
-			<div class="col-sm-6">
-				<center><a href="myadmin/help"><span style="font-size:75px;color:#FFE200;"><i class="glyphicon glyphicon-question-sign  abcd"></i></span></a>
-				<br><br>
+			<br> <br>
+			<div class="row">
+				<div class="col-md-6">
+					<center><a href="myadmin/networkDetails">
+						<span style="font-size: 75px;"><i
+							class="glyphicon glyphicon-th-list  abcd"></i></span></a>
+					</center>
+					<br><br>
+				<h4 style="color:#FFE200;">Network Details</h4>
+				</div>
+				<div class="col-md-6">
+					<center><a href="myadmin/help">
+						<span style="font-size: 75px;"><i
+							class="glyphicon glyphicon-question-sign  abcd"></i></span></a>
+					</center>
+					<br><br>
 				<h4 style="color:#FFE200;">Help</h4>
-				</center>
+				</div>
 			</div>
 		</div>
 	</div>

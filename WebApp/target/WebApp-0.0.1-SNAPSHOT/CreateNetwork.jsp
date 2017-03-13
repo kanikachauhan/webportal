@@ -35,6 +35,7 @@ app.controller('mainController',function($scope,$http){
 		        }).error(function(data, status, headers, config){});
     $http.get("myaccount/checknetworknumber").success(
     	    function(data,status,headers,config){
+    	    	
         	 	checknum   = data;
     	    }).error(function(data,status,headers,config){});
     $http.get("myaccount/checknetworknames").success(
@@ -46,6 +47,7 @@ $(document).ready(function(){
 		$("#save").click(function() {
 			var u=document.getElementById("nname");
 			var tt=u.value;
+			//alert(tt);
 			var count=0;
 			var nid = '';
 			var idflag = '';
@@ -56,7 +58,7 @@ $(document).ready(function(){
 			    nid += chars.substring(rnum,rnum+1);
 			}
 			for(var t=0;t<jsonarr.length;t++){
-				if(nid==jsonarr[t].networkid){
+				if(nid==jsonarr[t].networkID){
 					idflag = true;
 					break;
 				}		
@@ -64,7 +66,7 @@ $(document).ready(function(){
 			var y="";
 			if(typeof jsonarr1[0]!=='undefined'){
 			for(var t=0;t<jsonarr1.length;t++){
-				if((tt.toUpperCase()===jsonarr1[t].networkname.toUpperCase())){
+				if((tt.toUpperCase()===jsonarr1[t].networkName.toUpperCase())){
 						y="fault";
 						break;
 					}
@@ -82,6 +84,7 @@ $(document).ready(function(){
 					alert("Please remove spaces");
 				}else{
 					if(checknum.length <10){
+						//alert(checknum.length);
 						$.ajax({
 							url: "myaccount/networkcreate",
 							method:'GET',

@@ -182,8 +182,8 @@ public final class HomePage_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<body>\r\n");
       out.write("\t\t<div class=\"container-fluid\" style=\"background-color:#1C1C18;\">\r\n");
       out.write("\t\t<div class=\"maincontent\">\r\n");
-      out.write("\t\t<div class=\"jumbotron\">\t\r\n");
-      out.write("\t\t</div>\r\n");
+      out.write("\t<!-- \t<div class=\"jumbotron\">\t\r\n");
+      out.write("\t\t</div> -->\r\n");
       out.write("\t\t\t<div class=\"row\">\r\n");
       out.write("\t\t\t\t\t<!-- <div class=\"row\" style=\"margin-top:50px;margin-bottom:50px;margin-left:50px;margin-right:50px;padding:150px;border:5px solid #FFE200;border-radius:10px;background-color:#242316;\">\r\n");
       out.write("\t\t\t\t\t<div class=\"col-sm-3\"><center>\r\n");

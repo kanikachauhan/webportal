@@ -200,12 +200,8 @@ $http.get("myadmin/tabledata").success(
 	            $scope.sortType     = 'name'; // set the default sort type
 	            $scope.sortReverse  = false;  // set the default sort order
 	            jsonres             = data;
+	           
 	        }).error(function(data, status, headers, config){});
-$http.get("myadmin/getmacaddress").success(
-        function(data, status, headers, config) {
-            maddress             = data;
-           
-        }).error(function(data, status, headers, config){});
 });
 function generatepwd(){
 	var t1=document.getElementById("pwd");
@@ -253,7 +249,7 @@ function generatecid(){
 	t22.value=cid;
 	if(typeof jsonres != 'undefined'){
 		for(var t=0;t<jsonres.length;t++){
-			if(cid==jsonres[t].customerid){
+			if(cid==jsonres[t].customerID){
 				alert("generate again key already exists");
 				break;
 			}		
@@ -269,11 +265,8 @@ $(document).ready(function(){
 function setid(){
 	var tt=document.getElementById("modalcustid");
 	var x=tt.value;
-	//alert(x);
 	deletionid=""+x+"";
-	//macaddress=""+y+"";
 	$("#del").bind('click', function() {
-		//alert("xxxx");
 		$("#"+x+"").closest('tr').hide();
 		$.ajax({
 			url: "myadmin/deletedata",
@@ -297,77 +290,45 @@ function setid(){
 	});
 	
 	 	$("input:disabled").mouseover(function() {
-		// 	alert("as");
 		    $(this).find("input:disabled").attr("disabled", false).focus();
 		  });
 					
 }
 function checkmac(){
-	/* var macaddr=document.getElementById("modalmacaddress");
-	var vl=macaddr.value; */
-	var tpid = document.getElementById("modalpid");
+	/*var tpid = document.getElementById("modalpid");
 	var tpidval = tpid.value;
 	var mty="false";
-	/*for(var t=0;t<maddress.length;t++){
-		if(v1===maddress[t].macaddress){
-			mty="true";
-			break;
-		}
-	}
-
-	if(mty==="true" ){
-		$("#productaddpop").submit(function(e){
-			e.preventDefault();
-			$("#macmsg").modal('show');
-		});
-	}
-	else*/ if(tpidval==="Show Products"){
+	 if(tpidval==="Show Products"){
 		$("#productaddpop").submit(function(e){
 			e.preventDefault();
 			$("#macmsg1").modal('show');
 		});
 	}
-	else{
+	else{*/
 		$.ajax({
 			url:"myadmin/useraddproduct",
 			method:'GET',
-			data:'modalmacaddress= '/*+document.getElementById("modalmacaddress").value+*/+'&uname='+unameForManage+'&productid='+document.getElementById("modalpid").value,
+			data:'uname='+unameForManage+'&productid='+document.getElementById("modalmulproducts").value,
 			success:function(response){
-				//document.getElementById("added").disabled = true;
+		
 				$("#successModal").modal('show');	
 			}
-		});			
-	}
+		});		
+	//}
 }
 function check(){	
-	var productsArrAdded = [];
+	var productsArrAdded = $('#mulproducts').val();
 	var tcid=document.getElementById("emailid");
-	//alert(tcid);
-	//var tmadd=document.getElementById("macaddress");
-	
 	var tt=tcid.value.trim();
-	//alert(tt);
-	//var tmad=tmadd.value.trim();
-	//alert(tmad);
 	var tty="fault";
 		for(var ty=0;ty<jsonres.length;ty++){
-		//	alert(jsonres[ty].emailid);
-		if(tt===jsonres[ty].emailid){
+		if(tt===jsonres[ty].email){
 			tty="nfault";
 			break;
 		}
 	}
 		var mty="fault";
-		/*for(var t=0;t<maddress.length;t++){
-			if(tmad===maddress[t].macaddress){
-				mty="nfault";
-				//alert(tmad+" "+maddress[t].macaddress);
-				break;
-			}
-		}*/
-		//alert(formvalid);
 	if(formvalid){
-		//var ut = document.getElementById("pid").value;
 		var t1=document.getElementById("pwd");
 		var t11=document.getElementById("tpwd");
 		var t2=document.getElementById("cid");
@@ -375,76 +336,29 @@ function check(){
 		var t33 = document.getElementById("stpwd");
 		var yu=0;
 		var maarr=[];
-		for(var nott=0;nott<noOfproducts;nott++){
-			yu = yu+1;
-			var pval = document.getElementById('selectprod'+yu).value;
-			var mval = document.getElementById('macaddress'+yu).value;
-			productsArrAdded[nott] = "{pval:"+pval+"=mval:"+mval+"}";
-			for(var tcount=0;tcount<maddress.length;tcount++){
-				//alert(maddress[tcount].macaddress);
-				maarr[tcount] = maddress[tcount].macaddress;
-				if(maddress[tcount].macaddress===mval&&maddress[tcount].macaddress!==""){
-					mty="nfault";
-					break;
-				}
-			}
-			if(mty==="nfault")
-				break;
-		}
-		/*var fbool = "true";
-		for(var tcount = 0;tcount<maarr.length;tcount++){
-			alert(Boolean(maarr[tcount]));
-			if(Boolean(maarr[tcount])){
-				
-				if(!(maarr[tcount].match("/[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}/"))){
-					fbool = "false";
-					break;
-				}
-			}
-		}*/
-		//alert(ut+"  "+t11.value+" "+t22.value);
-		/*if(ut === "Show Products"){
-						$("#userAdd").submit(function(e){
-							e.preventDefault();
-							$("#msgs").text("Choose A Valid Product");
-						});		
-					}else{*/
-						
 						if(tty === "nfault"){
 							$("#userAdd").submit(function(e){
 								e.preventDefault();
-								//alert("Email Id exists.");
 								$("#msgs").text("Email Id exists.");
 							});
 						}else{
 							if(mty==="nfault"){
 								$("#userAdd").submit(function(e){
 									e.preventDefault();
-									//alert("Mac Address exists.");
 									$("#msgs").text("Mac Address exists.");
 								});			
 							}
-							/*else
-								if(fbool ==="false"){
-									$("#userAdd").submit(function(e){
-										e.preventDefault();
-										//alert("Mac Address exists.");
-										$("#msgs").text("One Or More Mac Address Is Invalid");
-									});	
-								}*/
 							else{
 								if(t11.value === ''|| t22.value === ''||t33.value === ''){
 									$("#userAdd").submit(function(e){
 										e.preventDefault();
-										//alert("Customer Id or Password Field is Empty.");
 										$("#msgs").text("Customer Id or Password Field is Empty.");
 									});			
 								}else{
 									$.ajax({
 										url:"myadmin/savedata",
 										method:'GET',
-										//data:'cid='+document.getElementById("cid").value+'&fname='+document.getElementById("fname").value+'&mname='+document.getElementById("mname").value+'&lname='+document.getElementById("lname").value+'&emailid='+document.getElementById("emailid").value+'&password='+document.getElementById("pwd").value+'&contactno='+document.getElementById("contactno").value+'&address='+document.getElementById("address").value+'&macaddress='+document.getElementById("macaddress").value+'&prodid='+ut+'&role='+document.getElementById("role").value+'&spwd='+document.getElementById("spwd").value+'&arr='+productsArrAdded+'&noarr='+noOfproducts
-										data:'cid='+document.getElementById("cid").value+'&fname='+document.getElementById("fname").value+'&mname='+document.getElementById("mname").value+'&lname='+document.getElementById("lname").value+'&emailid='+document.getElementById("emailid").value+'&password='+document.getElementById("pwd").value+'&contactno='+document.getElementById("contactno").value+'&address='+document.getElementById("address").value+'&role='+document.getElementById("role").value+'&spwd='+document.getElementById("spwd").value+'&arr='+productsArrAdded+'&noarr='+noOfproducts,
+										data:'cid='+document.getElementById("cid").value+'&fname='+document.getElementById("fname").value+'&mname='+document.getElementById("mname").value+'&lname='+document.getElementById("lname").value+'&emailid='+document.getElementById("emailid").value+'&password='+document.getElementById("pwd").value+'&contactno='+document.getElementById("contactno").value+'&address='+document.getElementById("address").value+'&role='+document.getElementById("role").value+'&spwd='+document.getElementById("spwd").value+'&arr='+productsArrAdded+'&macaddress='+document.getElementById("macaddress").value,
 										success: function(){  
 											$("#msgs").text("Details Saved");
 										}
@@ -459,7 +373,7 @@ function check(){
 	}
 }
 function showpop(x){
-	//alert(tt);
+	//alert(x);
 	var tt=""+x;
 	var v1=document.getElementById("modalcustid");
 	var v2=document.getElementById("modalfname");
@@ -469,15 +383,17 @@ function showpop(x){
 	var v6=document.getElementById("modaladdress");
 	var v7=document.getElementById("modalcontactno");
 	for(var i=0;i<jsonres.length;i++){
-		if(jsonres[i].customerid==tt){
+		if(jsonres[i].customerID==tt){
 			//alert(jsonres[i].customerid+" "+jsonres[i].emailid);
-			v1.value=jsonres[i].customerid;
-			v2.value=jsonres[i].firstname;
-			v3.value=jsonres[i].middlename;
-			v4.value=jsonres[i].lastname;
-			v5.value=jsonres[i].emailid;
+			v1.value=jsonres[i].customerID;
+			var name = jsonres[i].name;
+			var tnamearr = name.split(" ");
+			v2.value=tnamearr[0];
+			v3.value=tnamearr[1];
+			v4.value=tnamearr[2];
+			v5.value=jsonres[i].email;
 			v6.value=jsonres[i].address;
-			v7.value=jsonres[i].contactno;
+			v7.value=jsonres[i].phoneNumber;
 		}
 	}
 	v1.disabled=true;
@@ -531,22 +447,9 @@ function abc(){
 	}	
 }
 function del(x){
-	//var tt=document.getElementById("macaddr");
-	//var x=tt.value;
-	//alert(x);
 	$("#pdeleteModal").modal('show');
 	deletepid = x;
-//$("#"+x).bind('click', function() {
-	//alert("here");
-	/*$.ajax({
-		url:"myadmin/userproductdelete",
-		data:"macaddress="+x+"&uname="+unameForManage,
-		method:'GET',
-		success:function(response){
-		$("#myModal1").modal('show');
-	}
-		});*/
-//});
+
 }
 function delsensor(x){
 	$("#sdeleteModal").modal('show');
@@ -584,17 +487,17 @@ function manageproduct(x,y){
 		dataType:'json',
 		success:function(response){
 		prodres = response;
-		//alert(prodres);
+		//alert(response);
 		$("#producttb td").parent().remove();
 		//alert(prodres.length);
 		for(var i=0;i<prodres.length;i++)
-			$("#producttb").append("<tr><td>"+prodres[i].pid+"</td><td>"+prodres[i].name+"</td></tr>");
+			$("#producttb").append("<tr><td>"+prodres[i].productID+"</td><td>"+prodres[i].name+"</td></tr>");
 		//+"</td><td>"+prodres[i].description+"</td><td>"+prodres[i].name+"</td>
 		unameForManage=y;
 		}
 	});
 	
-	$.ajax({
+	/*$.ajax({
 		url:"myadmin/sensortb",
 		data:"customerid="+x,
 		method:'GET',
@@ -608,7 +511,7 @@ function manageproduct(x,y){
 				$("#sensortb").append("<tr><td>"+sensorres[i].pid+"</td><td><button type='button'  class='btn btn-danger' id='"+sensorres[i].pid+"' style='font-weight:bold' onclick='delsensor(this.id);'>Delete</button></td></tr>");
 			}
 		}
-	});
+	});*/
 }
 </script>
 <style type="text/css">
@@ -747,7 +650,7 @@ color:#FFE200;
             </div>
             <div class="col-sm-4">
 			<span ng-if="userAdd.contactno.$error.required && !userAdd.contactno.$pristine" style="margin-left:25px;">Contact No. required.</span>
-    						  <span ng-if="userAdd.contactno.$error.pattern && !userAdd.contactno.$pristine" style="margin-left:25px;">Invalid Contact No.</span>
+    		<span ng-if="userAdd.contactno.$error.pattern && !userAdd.contactno.$pristine" style="margin-left:25px;">Invalid Contact No.</span>
 			</div>
           </div>
 		</div>
@@ -785,11 +688,28 @@ color:#FFE200;
 	              Select Product
 	            </label></div>
 	            <div class="col-sm-4">
-	   			<input type="button" id="pidbtn" name="pidbtn" class="btn" style="background-color:#1C1C18;color:#a0b3b0;font-size:20px;width:300px;height:45px;margin-left:15px;border:solid 1px #a0b3b0;"  value="Add Products" onClick="addProducts()"></input>
-				</div>
+	   		<select name="products" id="mulproducts" multiple>
+			 		<option ng-repeat=" x in itemsdata" value="{{x.productID}}">{{x.name}}</option>
+			 	</select>
+			 </div>
 			</div>
 		</div>
-  		
+  		<div class = "row">
+			<div class="field-wrap col-sm-10" ng-class="{ 'has-error' : userAdd.macaddress.$invalid || userAdd.macaddress.$error.pattern && !userAdd.macaddress.$pristine }">
+	   			<div class="col-sm-4" >
+	   			<label style="position: relative; -webkit-transform: translateY(0px);left: 0px;">
+	              Mac Address<span class="req">*</span>
+	            </label></div>
+	            <div class="col-sm-4">
+					<input type="text" data-toggle="tooltip" id="macaddress" data-placement="bottom"  title="Mac Address fields should be separated by : It should have a length of 12 characters. " name="macaddress" ng-model="macaddress" ng-pattern="/[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}\:[a-zA-Z0-9]{2}/" required/>
+					</div>
+					<div class="col-sm-4">
+					<span ng-show="userAdd.macaddress.$error.required && !userAdd.macaddress.$pristine" style="margin-left:25px;">Mac Address required.</span>
+    				
+			 	</div>
+			 
+			</div>
+		</div>
 	</div><br><br><br>
   <center>
   		<div class="col-sm-2" style="padding-top:20px;;">
@@ -817,31 +737,10 @@ color:#FFE200;
     			<table class="table table-bordered table-stripped table-hover table-responsive" id="deletetable" style="background-color:#242316;">
     				<tr>
     					<th>
-    						<a href="#" ng-click="sortType = 'customerid'; sortReverse = !sortReverse"  data-toggle="tooltip" data-placement="top"  title="click to sort">
-    							Customer Id
-    							  <span ng-show="sortType == 'customerid' && !sortReverse" class="fa fa-caret-down"></span>
-            					  <span ng-show="sortType == 'customerid' && sortReverse" class="fa fa-caret-up"></span>
-            				</a>
-    					</th>
-    					<th>
     						<a href="#" ng-click="sortType = 'firstname'; sortReverse = !sortReverse"  data-toggle="tooltip" data-placement="top"  title="click to sort">
-    							First Name
+    							Name
     							<span ng-show="sortType == 'firstname' && !sortReverse" class="fa fa-caret-down"></span>
             					<span ng-show="sortType == 'firstname' && sortReverse" class="fa fa-caret-up"></span>
-            				</a>
-    					</th>
-    					<th>
-    						<a href="#" ng-click="sortType = 'middlename'; sortReverse = !sortReverse"  data-toggle="tooltip" data-placement="top"  title="click to sort">
-    							Middle Name
-    							<span ng-show="sortType == 'middlename' && !sortReverse" class="fa fa-caret-down"></span>
-            					<span ng-show="sortType == 'middlename' && sortReverse" class="fa fa-caret-up"></span>
-            				</a>
-    					</th>
-    					<th>
-    						<a href="#" ng-click="sortType = 'lastname'; sortReverse = !sortReverse"  data-toggle="tooltip" data-placement="top"  title="click to sort">
-    							Last Name
-    							<span ng-show="sortType == 'lastname' && !sortReverse" class="fa fa-caret-down"></span>
-            					<span ng-show="sortType == 'lastname' && sortReverse" class="fa fa-caret-up"></span>
             				</a>
     					</th>
     					<th>
@@ -882,19 +781,17 @@ color:#FFE200;
     						Manage Products
     						</a>
     					</th>
+    					
     				</tr>
     				<tr  ng-repeat="x in itemsdata| orderBy:sortType:sortReverse |filter:searchCustomer">
-    					<div ng-if ="x.role === 'user'">
-    					<td>{{x.customerid}}</td>
-    					<td>{{x.firstname}}</td>
-    					<td>{{x.middlename}}</td>
-    					<td>{{x.lastname}}</td>
-    					<td>{{x.emailid}}</td>
-    					<td>{{x.contactno}}</td>
+    					<div ng-if ="x.role ==='user'">
+    					<td>{{x.name}}</td>
+						<td>{{x.email}}</td>
+    					<td>{{x.phoneNumber}}</td>
     					<td>{{x.address}}</td>
-    					<td>{{x.password}}</td>
-    					<td><input type="button" class="btn" style="height:50px;background-color:#FFE251;color:black;font-weight:bold;" id="{{x.customerid}}" name="{{x.emailid}}" onclick="showpop($(this).attr('id'));" value="Manager User"/></td>
-    					<td><input type="button" class="btn" style="height:50px;background-color:#4B8211;color:black;font-weight:bold;" id="{{x.customerid}}" name="{{x.emailid}}" onclick="manageproduct($(this).attr('id'),$(this).attr('name'));" value="Manage Products"/></td> 
+    					<td>{{x.clientPassword}}</td>
+    					<td><input type="button" class="btn" style="height:50px;background-color:#FFE251;color:black;font-weight:bold;" id="{{x.customerID}}" name="{{x.email}}" onclick="showpop($(this).attr('id'));" value="Manager User"/></td>
+    					<td><input type="button" class="btn" style="height:50px;background-color:#4B8211;color:black;font-weight:bold;" id="{{x.customerID}}" name="{{x.email}}" onclick="manageproduct($(this).attr('id'),$(this).attr('name'));" value="Manage Products"/></td> 
     					</div>
     					<!-- 	<td><button type="button" class="btn btn-default" id="{{x.customerid}}" name="{{x.macaddress}}" onclick="setid($(this).attr('id'),$(this).attr('name'));">Delete</button></td>-->
     				</tr>
@@ -1021,13 +918,13 @@ color:#FFE200;
          		</div>
          		<div id="mn2" class="tab-pane fade">
          			<h1>Add</h1>
-		<form role="form" name="productaddpop" id="productaddpop" ng-controller="modalCtrl" ng-app="myApp" method="post" novalidate>         			
+		<form role="form" name="productaddpop" id="productaddpop" ng-controller="validateCtrl" ng-app="myApp" method="post" novalidate>         			
          		
          			<table>
-         		<tr><div class="form-group required">
-         					<td>Click Here</td>
-         					<td><input type="button" id="modalpid" name="pid" class="btn" style="background-color:white;color:#FFE200;font-size:18px;width:250px;height:40px;" onClick="showProdPopOne();" value="Show Products"></input></td>
-         				</div>
+         		<tr>	
+	   				<select name="products" id="modalmulproducts" multiple>
+			 		<option ng-repeat=" x in itemsdata" value="{{x.productID}}">{{x.name}}</option>
+			 	</select>
          				</tr>
          				<%-- <tr><div class="form-group required">
          					<td>Mac Address</td>

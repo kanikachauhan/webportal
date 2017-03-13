@@ -25,6 +25,7 @@
 <script type="text/javascript">
 var jsonarr1,jsonarr2,uname;
 var nname;
+var reqflag = "";
 var app = angular.module('myApp', []);
 app.controller('mainController',function($scope,$http){
 	$http.get("myaccount/networknames").success(
@@ -36,6 +37,7 @@ app.controller('mainController',function($scope,$http){
 	        function(data, status, headers, config) {
 		       $scope.arr      = data;
 		       jsonarr2 = data;
+		      // alert(jsonarr2);
 	        }).error(function(data, status, headers, config){});
 	});
 function request(){
@@ -48,26 +50,46 @@ function request(){
 	uname = un.value;
 	var oflag = '',jflag ='';
 	for(var i=0;i<jsonarr1.length;i++){
-		//alert(jsonarr1[i].networkname+"  "+nname);
-		if(jsonarr1[i].networkname === nname){
+		if(jsonarr1[i].networkName === nname && jsonarr1[i].admin === uname){
 			statusowned = "owned";
 			break;
 		}
 	}
-	
+	if(statusowned !== "owned"){
 	for(var i=0;i<jsonarr2.length;i++){
-		//alert(jsonarr2[i].connectorname+" "+jsonarr2[i].ownerFlag+" "+jsonarr2[i].networkname+" "+jsonarr2[i].joinFlag);
-		if((jsonarr2[i].connectorname === uname) && (jsonarr2[i].ownerFlag === "n") && (jsonarr2[i].networkname === nname) && (jsonarr2[i].joinFlag === "y")){
-			statusowned = "joined";
-			break;
-		} 
+		var usearr = jsonarr2[i].users;
+		var flag = "";
+		if(usearr !== undefined) {
+		for(var j=0;j<usearr.length;j++){
+			//alert(jsonarr2[i].users[j].email+" "+uname+" "+jsonarr1[i].networkName+" "+nname);
+			if((jsonarr2[i].users[j].email === uname) && (jsonarr1[i].networkName === nname))
+			{
+				flag = "j";
+				
+				break;
+			}
+		}
+		if(flag=="j")
+			{
+					statusowned = "joined";
+					break;
+				}
+			}
+		}
 	}
 	for(var j=0;j<jsonarr2.length;j++){
-		//alert(jsonarr2[j].connectorname+" "+uname);
-		if(jsonarr2[j].connectorname === uname)
+		if(jsonarr2[j].admin === uname)
 		{	
-			//alert(count);
 			count++;
+		}
+		var usearr = jsonarr2[j].users;
+		if(usearr !== undefined){
+		for(var i=0;i<usearr.length;i++){
+				if((jsonarr2[j].users[i].email === uname))
+				{
+					count++;
+				}
+			}
 		}
 	}
 	if(statusowned === "owned" ||statusowned === "joined"){
@@ -77,10 +99,11 @@ function request(){
 			$("#joined").modal('show');
 	}
 	else{
+		//alert(count);
 		if(count<=10){
+			///alert("here");
 						if($("#req").val()==="Join"){
-							oflag = 'n';
-							jflag = 'n';
+							reqflag = "true";
 							$("#req").val("Requested");
 							document.getElementById("req").disabled = true;
 						}
@@ -92,7 +115,7 @@ function request(){
 						$.ajax({
 							url:"myaccount/request",
 							type:'GET',
-							data:'oflag='+oflag+"&nname="+nname+"&jflag="+jflag,
+							data:'reqflag='+reqflag+'&nname='+nname,
 							success : function(response){
 								
 						},
@@ -108,15 +131,12 @@ function showres(){
 	$("#ntb").remove();
 	var tt=document.getElementById("nname");
 	var v=tt.value;
-	//alert(v);
 	for(var t=0;t<jsonarr2.length;t++)
 	{
-		if(v.toUpperCase() === jsonarr2[t].networkname.toUpperCase()){
-			//alert(v);
-			
+		if(v.toUpperCase() === jsonarr2[t].networkName.toUpperCase()){
 			$("#abc").after().append(
-					"<table class='table table-bordered table-stripped table-hover table-responsive' id='ntb'><tr><th>Network Name</th><th>Request</th></tr><tr><td>"+jsonarr2[t].networkname+
-					"</td><td><input type='hidden' value='"+jsonarr2[t].networkname+"' id='jn'/><input type='button' class='btn btn-info' value='Join' onclick='request();' id='req'/></td></tr></table>");
+					"<table class='table table-bordered table-stripped table-hover table-responsive' id='ntb'><tr><th>Network Name</th><th>Request</th></tr><tr><td>"+jsonarr2[t].networkName+
+					"</td><td><input type='hidden' value='"+jsonarr2[t].networkName+"'/><input type='button' class='btn btn-info' value='Join' onclick='request();' id='req'/></td></tr></table>");
 			break;
 		}
 	}

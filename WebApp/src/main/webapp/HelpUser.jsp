@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
 <link rel="${pageContext.request.contextPath}/org/staticcontent/fileinput.css"/>
 <link rel="${pageContext.request.contextPath}/org/staticcontent/fileinput.min.css"/>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
 <script src="${pageContext.request.contextPath}/org/staticcontent/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/org/staticcontent/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/org/staticcontent/angular.min.js"></script>
@@ -33,35 +36,69 @@ background-color:#1C1C18;
 .fclass{
 	font-family: 'Courgette', cursive;
 	font-size:100px;
-	color:#FFE200;
+	color:#FFCC00;
 }
 .panel-default{
-	border:solid 5px #FFE200;
+	border:solid 5px #FFCC00;
 	color:black;
 	font-weight:bold;
 }
 .panel-heading{
 	font-family: 'Courgette', cursive;
-	border:solid 5px #FFE200;
+	border:solid 5px #FFCC00;
+}
+.w3-inner-color {
+	background-color: #242316 !important
+}
+
+.w3-text-custom {
+	color: #FFCC00 !important
+}
+
+.abcd {
+	border: 2px solid #FFCC00;
+	padding: 150px;
+	background-color: #242316;
+	color: #FFCC00;
+	border-radius: 10px;
+}
+
+.w3-margin {
+	margin-left: 10
+}
+.w3-inner-color {
+	background-color: #242316 !important;
 }
 </style>
+<script>
+function w3_open() {
+	document.getElementById("mySidenav").style.display = "block";
+}
+
+function w3_close() {
+	document.getElementById("mySidenav").style.display = "none";
+}
+</script>
 </head>
 <body style="background: #1C1C18;">
-
-	<nav class="navbar navbar-inverse navbar-fixed-top" style="background: #1C1C18;">	
-		<div class="container-fluid">
-			<ul class="nav navbar-nav">
-				<li><a href="${pageContext.request.contextPath}/UserPage.jsp" style="color:white;font-weight:bold;" >Home</a></li>
-				<li><a href="myaccount/logout" style="color:white;font-weight:bold;" >Log Out</a></li>
-			</ul>
+<nav class="w3-sidenav w3-inner-color  w3-animate-left"
+		style="width:70px;display:none;z-index:2;" id="mySidenav"> <a
+		class="w3-padding-16" href="#" onclick="w3_close()"><i
+		class="fa fa-home w3-xxlarge w3-text-custom"></i></a> <a
+		class="w3-padding-16" href="#" onclick="w3_close()"><i
+		class="fa fa-user w3-xxlarge w3-text-custom"></i></a> </nav>
+		<div class="w3-top">
+			<div class="w3-white w3-xlarge w3-padding-xlarge w3-text-custom w3-inner-color "
+				>
+				<div class="w3-left w3-opennav fa fa-bars"
+					onclick="w3_open()"></div>
+				<div class="w3-center">User Help</div>
+			</div>
 		</div>
-	</nav>
-	<div class="jumbotron">
-		
-	</div>
+
 	<div class="container-fluid" style="background-color:#1C1C18;">
-	<div class="fclass">
-		<center>User Help</center>
+	<div><h1>
+		<center>User Help</center></h1>
 	</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -76,14 +113,14 @@ background-color:#1C1C18;
 				<h3 class="panel-title">Network Details</h3>
 			</div>
 			<div class="panel-body">
-				This section comprises of three parts, namely :- Create A Network,Join A Network,My Networks. 
+				This section comprises of four parts, namely :- Create A Network,Join A Network,My Networks,Members In A Network. 
 				<br>
 				For Create A Network:
 				<ul>
-					<li>Enter a network name.  **Use unique name and avoid white-space.</li>
+					<li>Enter a network name.  **Use unique name.</li>
 					<li>Click on save.</li>
 				</ul>
-				For Join A Network:
+				For Joining A Network:
 				<ul>
 					<li>You must know the name of the network you want to join.</li>
 					<li> Once requested, you cannot change your option. It has to be cancelled by the owner only.</li>
@@ -94,7 +131,7 @@ background-color:#1C1C18;
 					<li>
 					<ul>
 						<li>First Section shows you owned networks.</li>
-						<li> You can delete, change a timer or view the members in you network using 'Network-Info'.</li>
+						<li> You can delete, change a timer.</li>
 						<li> Once you click on change timer button, the text box will be enabled. </li>
 						<li> You can enter your value and save the same.</li>
 						<li> Please enter valid values only.</li>
@@ -103,7 +140,6 @@ background-color:#1C1C18;
 					<li>
 					<ul>
 						<li>Second section shows the networks joined by you.</li>
-						<li>You can leave a network by clicking on leave button.</li>
 					</ul>
 					</li>
 					<li>
@@ -111,6 +147,12 @@ background-color:#1C1C18;
 						<li> Your requests for your owned networks is shown in third section.</li>
 						<li> You can cancel or approve the request.</li>
 						<li>Once approved, you cannot cancel and vice-versa.</li>
+					</ul>
+					</li>
+					<li>
+						<ul>
+						<li> Name of the network along with member is shown in the fourth section.</li>
+						<li> You can remove a member from network.</li>
 					</ul>
 					</li>
 				</ul>

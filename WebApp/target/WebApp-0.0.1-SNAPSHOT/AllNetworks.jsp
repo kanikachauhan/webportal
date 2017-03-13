@@ -65,7 +65,7 @@ app.controller('mainController',function($scope,$http){
 					Network Names
 				</th>
 				<tr ng-repeat=" x in itemsdata">
-					<td>{{x.nname}}</td>
+					<td>{{x.networkName}}</td>
 				</tr>
 			</table>
 		</center>

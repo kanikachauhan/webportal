@@ -1,42 +1,21 @@
 package Dao;
 import java.util.List;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.data.authentication.UserCredentials;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-@Component
-@Repository
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+@Configuration
 public class DatabaseDao {
-	@Autowired
-	static public DataSource dataSource;
-	@Autowired
-	static public JdbcTemplate jtemplate;
-	
-	public static JdbcTemplate getJtemplate() {
-		return jtemplate;
-	}
-
-	public static void setJtemplate(JdbcTemplate jtemplate) {
-		DatabaseDao.jtemplate = jtemplate;
-	}
-
-	public static DataSource getDataSource() {
-		return dataSource;
-	}
-
-	public void setDataSource(DataSource ds)
-	{
-		try
-		{
-			dataSource=ds;
-			System.out.println("inside data source");
-			System.out.println(this.dataSource);
-			this.jtemplate=new JdbcTemplate(dataSource);
-		}
-		catch(Exception e)
-		{}
-	}
+	ApplicationContext ctx = new GenericXmlApplicationContext("applicationContext.xml");
+	MongoOperations mongoOperation = (MongoOperations)ctx.getBean("mongoTemplate");	
 }

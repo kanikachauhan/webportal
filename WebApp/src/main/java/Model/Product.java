@@ -2,31 +2,20 @@ package Model;
 
 import javax.servlet.http.Part;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "products")
 public class Product {
-	private String macaddress;
+	private String productID;
 	private String name;
 	private String description;
-	//private Part img;
-	private String uname;
-	private String pid;
-	public String getPid() {
-		return pid;
+	private String macAddress;
+	
+	public String getProductID() {
+		return productID;
 	}
-	public void setPid(String pid) {
-		this.pid = pid;
-	}
-	public String getUname() {
-		return uname;
-	}
-	public void setUname(String uname) {
-		this.uname = uname;
-	}
-	public String getMacaddress() {
-		return macaddress;
-	}
-	public void setMacaddress(String macaddress) {
-		this.macaddress = macaddress;
+	public void setProductID(String productID) {
+		this.productID = productID;
 	}
 	public String getName() {
 		return name;
@@ -40,10 +29,14 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/*public Part getImg() {
-		return img;
+	public String getMacAddress() {
+		return macAddress;
 	}
-	public void setImg(Part img) {
-		this.img = img;
-	}*/
+	public void setMacAddress(String macAddress) {
+		this.macAddress = macAddress;
+	}
+	@Override
+	public String toString(){
+		return "{\"productID\":\""+productID+"\",\"name\":\""+name+"\",\"description\":\""+description+"\",\"macAddress\":\""+macAddress+"\"}";
+	}
 }

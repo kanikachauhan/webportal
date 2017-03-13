@@ -68,12 +68,10 @@ app.controller('validateCtrl', function($scope,$http) {
 				<tr>
 					<th>Product Id</th>
 					<th>Product Name</th>
-					<!-- <th>Mac Address</th> -->
 				</tr>
 				<tr  ng-repeat="x in prodarr">
-					<td style="font-family: 'Kaushan Script', cursive;color: #FFE200;">{{x.pid}}</td>
+					<td style="font-family: 'Kaushan Script', cursive;color: #FFE200;">{{x.productID}}</td>
 					<td style="font-family: 'Kaushan Script', cursive;color: #FFE200;">{{x.name}}</td>
-					<!-- <td style="font-family: 'Kaushan Script', cursive;color: #FFE200;">{{x.macaddress}}</td> -->
 				</tr>
 			</table>
 		</div>

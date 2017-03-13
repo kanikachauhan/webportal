@@ -1,61 +1,51 @@
 package Model;
 
+import java.util.ArrayList;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+@Document(collection = "networks")
 public class Network {
-	private String networkname;
-	private String creatername;
-	private String connectorname;
-	private String status;
-	private String userstatus;
-	private String networkId;
-	private String ownerFlag;
-	private String joinFlag;
-	public String getOwnerFlag() {
-		return ownerFlag;
-	}
-	public void setOwnerFlag(String ownerFlag) {
-		this.ownerFlag = ownerFlag;
-	}
-	public String getJoinFlag() {
-		return joinFlag;
-	}
-	public void setJoinFlag(String joinFlag) {
-		this.joinFlag = joinFlag;
-	}
-	public String getNetworkId() {
-		return networkId;
-	}
-	public void setNetworkId(String networkId) {
-		this.networkId = networkId;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getUserstatus() {
-		return userstatus;
-	}
-	public void setUserstatus(String userstatus) {
-		this.userstatus = userstatus;
-	}
-	public String getNetworkname() {
-		return networkname;
-	}
-	public void setNetworkname(String networkname) {
-		this.networkname = networkname;
-	}
-	public String getCreatername() {
-		return creatername;
-	}
-	public void setCreatername(String creatername) {
-		this.creatername = creatername;
-	}
-	public String getConnectorname() {
-		return connectorname;
-	}
-	public void setConnectorname(String connectorname) {
-		this.connectorname = connectorname;
-	}
+	@Id
+	private String networkID;
+	private String networkName;
+	private String admin;
+	private String timer;
+	private ArrayList<Customer> users;
 	
+	public String getNetworkID() {
+		return networkID;
+	}
+	public void setNetworkID(String networkID) {
+		this.networkID = networkID;
+	}
+	public String getNetworkName() {
+		return networkName;
+	}
+	public void setNetworkName(String networkName) {
+		this.networkName = networkName;
+	}
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
+	public String getTimer() {
+		return timer;
+	}
+	public void setTimer(String timer) {
+		this.timer = timer;
+	}
+	public ArrayList getUsers() {
+		return users;
+	}
+	public void setUsers(ArrayList users) {
+		this.users = users;
+	}
+	@Override
+	public String toString(){
+		return "{\"networkID\":\""+networkID+"\",\"networkName\":\""+networkName+"\",\"admin\":\""+admin+"\",\"timer\":\""+timer+"\""
+				+ ",\"users\":\""+users+"\"}";	
+		}
 }

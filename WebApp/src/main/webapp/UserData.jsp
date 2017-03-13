@@ -13,19 +13,24 @@
               response.setDateHeader ("Expires", 0);
                  
 %> 
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Alarm Connect</title>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="${pageContext.request.contextPath}/org/staticcontent/jquery.js"></script>
-<script src="${pageContext.request.contextPath}/org/staticcontent/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/org/staticcontent/angular.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/org/staticcontent/bootstrap-theme.min.css"/>
-<link href='https://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="javascript/Script.js"></script>
 <script>
-var jsonarr;
-var eid;
-var tmac;
 var fname,mname,lname,emailid,password,address,contactno,macaddress='';
 var app = angular.module('myApp', []);
 app.controller('mainController',function($scope,$http){
@@ -33,131 +38,116 @@ app.controller('mainController',function($scope,$http){
 		        function(data, status, headers, config) {
 			       $scope.arr      = data;
 			       jsonarr = data;
-			       $scope.fname = jsonarr[0].firstname;
-			       $scope.mname = jsonarr[0].middlename;
-			       $scope.lname = jsonarr[0].lastname;
-			       $scope.emailid = jsonarr[0].emailid;
+			      // alert(jsonarr);
+			       $scope.name = jsonarr[0].name;
+			       $scope.emailid = jsonarr[0].email;
 			       $scope.password = jsonarr[0].password;
 			       $scope.address = jsonarr[0].address;
-			       $scope.contactno = jsonarr[0].contactno;
-			       eid = jsonarr[0].emailid;
-			    /*   $scope.macaddress = '  ';
-			       for(var tt=0;tt<jsonarr.length;tt++)
-			    	   $scope.macaddress = $scope.macaddress + jsonarr[tt].macaddress+" ";
-			     */  			       
+			       $scope.contactno = jsonarr[0].phoneNumber;
+			      
 		        }).error(function(data, status, headers, config){});
-	$http.get("myaccount/extractproduct").success(
-			function(data,status,headers,config) {
-				$scope.macaddress = '';
-				tmac = data;
-				for(var t=0;t<tmac.length;t++)
-					$scope.macaddress = $scope.macaddress + tmac[t].macaddress+"    ";
-			}).error(function(data,status,headers,config){});
-	});
-app.controller('networkController',function($scope,$http){
-	$http.get("myaccount/ownnetwork").success(
-			function(data,status,headers,config){
-				var x='';
-				var y='';
-				var t=0;
-				for(t=0;t<data.length-1;t++)
-						x=x+data[t].nname+',';
-			//	alert(data[t].nname+" "+x);
-				x = x+data[t].nname;
-				//alert(x);
-				//x=x+data[t].name;					
-					$scope.networkarr = x;
-				//alert(x);
-				}).error(function(data,status,headers,config){});
 });
-app.controller('joinednetworkController',function($scope,$http){
-	$http.get("myaccount/myjoinednetwork").success(
-			function(data,status,headers,config){
-				var x='';
-				for(var t=0;t<data.length;t++)
-					x=x+data[i].nname;
-				$scope.joinednetwork = x;
-			}).error(function(data,status,headers,config){});
-});
-app.controller('joinednetworkController',function($scope,$http){
-	$http.get("myaccount/joinednetworkss").success(
-			function(data,status,headers,config){
-				var x='';
-				for(var t=0;t<data.length;t++)
-					x=x+data[i].nname;
-				$scope.joinednetwork = x;
-			}).error(function(data,status,headers,config){});
-});
-</script>
-<style type="text/css">
-.jumbotron{
- 	background-color:#1C1C18;
+function w3_open() {
+	document.getElementById("mySidenav").style.display = "block";
 }
-.fclass{
-	font-family: 'Coming Soon', cursive;
+
+function w3_close() {
+	document.getElementById("mySidenav").style.display = "none";
+}
+</script>
+<style>
+.w3-inner-color {
+	background-color: #242316 !important
+}
+
+.w3-text-custom {
+	color: #FFE200 !important
+}
+
+.abcd {
+	border: 2px solid #FFE200;
+	padding: 150px;
+	background-color: #242316;
+	color: #FFE200;
+	border-radius: 10px;
+}
+
+.w3-margin {
+	margin-left: 10
+}
+
+.w3-bottombar {
+	border-bottom: 6px solid #FFE200 !important
+}
+
+.w3-topbar {
+	border-top: 6px solid #FFE200 !important
+}
+
+.w3-text-custom {
+	color: #FFE200 !important
+}
+
+.w3-theme-d5 {
+	color: #FFE200 !important;
+	background-color: #FFE200 !important
+}
+
+.w3-border-custom {
+	border: 5px solid #FFE200 !important;
+	border-radius: 10px;
+}
+
+.w3-inner-color {
+	background-color: #242316 !important;
 }
 </style>
 </head>
-<body ng-app="myApp" style="background: #1C1C18;">
-<nav class="navbar navbar-inverse navbar-fixed-top" style="background: #1C1C18;">
-		<div class="container-fluid"> 	
-		<div class="navbar-header">
-			<ul class="nav navbar-nav">
-				<li><a href="${pageContext.request.contextPath}/UserPage.jsp"><p style="color: white;font-weight:bold;">Home</p></a></li>
-				<li><a href="myaccount/logout" style="color:white;font-weight:bold;" >Log Out</a></li>
-			</ul>
+<body style="background-color: #1C1C18;" ng-app="myApp">
+<nav class="w3-sidenav w3-inner-color  w3-animate-left"
+		style="width:70px;display:none;z-index:2;" id="mySidenav"> <a
+		class="w3-padding-16" href="#" onclick="w3_close()"><i
+		class="fa fa-home w3-xxlarge w3-text-custom"></i></a> <a
+		class="w3-padding-16" href="#" onclick="w3_close()"><i
+		class="fa fa-user w3-xxlarge w3-text-custom"></i></a> </nav>
+		<div class="w3-top">
+			<div class="w3-white w3-xlarge w3-padding-xlarge w3-text-custom w3-inner-color "
+				>
+				<div class="w3-left w3-opennav fa fa-bars"
+					onclick="w3_open()"></div>
+				<div class="w3-center">Menu</div>
+			</div>
 		</div>
-		</div>
-	</nav>
-	<div class="jumbotron">	
+	<br>
+	<br>
+	<br>
+	<div class="w3-row w3-section w3-inner-color w3-text-custom w3-padding"
+		style="margin-left: 10%; margin-right: 10%;">
+		<table class="table table-hover" ng-controller="mainController">
+			<tr>
+				<td><label>Name</label>&nbsp;&nbsp;&nbsp;&nbsp;<i class="w3-xxlarge fa fa-user"></i></td>
+				<td><label>{{name}}</label></td>
+			</tr>
+			<tr>
+				<td><label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;<i class="w3-xxlarge fa fa-envelope-o"></i></td>
+				<td><label>{{emailid}}</label></td>
+			</tr>
+			<tr>
+				<td><label>Password</label>&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="w3-xxlarge fa fa-unlock-alt"></i></td>
+				<td><label>{{password}}</label></td>
+			</tr>
+			<tr>
+				<td><label>Address</label>&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="w3-xxlarge fa fa-address-card"></i></td>
+				<td><label>{{address}}</label></td>
+			</tr>
+			<tr>
+				<td><label>Contact Number</label>&nbsp;&nbsp;&nbsp;&nbsp;<i
+					class="w3-xxlarge fa fa-phone"></i></td>
+				<td><label>{{contactno}}</label></td>
+			</tr>
+		</table>
 	</div>
-	
-	<div class="container-fluid fclass" style="background: #1C1C18;color:#FFE200;font-weight:bold;">
-		<ul class="nav nav-tabs">
-			<li><a data-toggle="tab" href="#home" class="abc"><h1>Your Info</h1></a></li>
-		</ul>
-	<div class="tab-content">
-		<!-- menu 1 start-->
-		<div id="home" class="tab-pane fade in active">
-		<center>
-			<table class="table table-hover table-responsive" id="details" name="details"   ng-controller="mainController">
-					<tr>
-						<td>First Name:</td>
-						<td>{{fname}}</td>
-					</tr>
-					<tr>
-						<td>Middle Name:</td>
-						<td>{{mname}}</td>
-					</tr>
-					<tr>
-						<td>Last Name:</td>
-						<td>{{lname}}</td>
-					</tr>
-					<tr>
-						<td>Email Id:</td>
-						<td>{{emailid}}</td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td>{{password}}</td>
-					</tr>
-					<tr>
-						<td>Address:</td>
-						<td>{{address}}</td>
-					</tr>
-					<tr>
-						<td>Contact No:</td>
-						<td>{{contactno}}</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-					</tr>
-					</table>
-			</center>
-    </div>
-   
-  </div>
-</div>
 </body>
 </html>

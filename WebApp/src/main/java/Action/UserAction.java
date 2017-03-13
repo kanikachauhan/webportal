@@ -1,64 +1,57 @@
 package Action;
 
-import java.util.*;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 
 import Dao.CustomerDao;
 import Dao.LoginDao;
-import Dao.ProductDao;
 import Model.Customer;
-import Model.Login;
 import Model.Network;
+import Model.NetworkJoin;
 import Model.Product;
 
-import com.google.gson.Gson;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
-
-public class UserAction extends ActionSupport implements ModelDriven, ServletRequestAware{
-	private Login login=new Login();
-	static private LoginDao ado=new LoginDao();
+public class UserAction extends ActionSupport /*implements ModelDriven, ServletRequestAware*/{
 	ActionContext ctx = ActionContext.getContext();
 	HttpServletRequest request = (HttpServletRequest) ctx.get(ServletActionContext.HTTP_REQUEST);
 	HttpServletResponse response = ServletActionContext.getResponse();
 	HttpSession session=request.getSession();
-	String password,networkname;
-	static String uname;
-	CustomerDao cdo=new CustomerDao();
-	ProductDao pdo=new ProductDao();
+	Customer custObj = new Customer();
+	Network nd = new Network();
+	NetworkJoin nj = new NetworkJoin();
+	LoginDao logindao = new LoginDao();
+	CustomerDao custdao = new CustomerDao();
 	public String execute(){
 		try{
-		uname=request.getParameter("username");
-		password=request.getParameter("password");
-		login.setPassword(password);
-		login.setRole("user");
-		login.setUsername(uname);
-		System.out.println(ado);
-		session.setAttribute("username",uname);
-		session.setAttribute("password",password);
-		session.setAttribute("role","user");
-		session.setAttribute("loggedin", false);
-		if(ado.checkpassword(login) && ado.validateAdmin(login)){
-			session.setAttribute("loggedin", true);
-				return "firsttime";
-		}
-		else{
-			if(ado.validateAdmin(login)){
-				System.out.println(session.getAttribute("username"));
-				session.setAttribute("loggedin", true);
-				System.out.println(session.getAttribute("loggedin"));
-				return SUCCESS;
+			String uname=request.getParameter("username");
+			String password=request.getParameter("password");
+			String role = "user";
+			custObj.setEmail(uname);
+			custObj.setPassword(password);
+			custObj.setRole("user");
+			session.setAttribute("username",uname);
+			session.setAttribute("password",password);
+			session.setAttribute("role","user");
+			session.setAttribute("loggedin", false);
+			System.out.println("uname "+uname+" password "+password+"role "+role);
+			if(logindao.validateUser(custObj)){
+				if(logindao.CheckFirstLogin(custObj).equalsIgnoreCase("Y"))
+				{
+					session.setAttribute("loggedin", true);
+					return "firsttime";
+				}else{
+					session.setAttribute("loggedin", true);
+					System.out.println("HERE");
+					return "success";
+				}
 			}
 			else{
 				addActionError("Invalid Credentials");
@@ -66,30 +59,23 @@ public class UserAction extends ActionSupport implements ModelDriven, ServletReq
 				return ERROR;
 			}
 		}
-	  }
-		catch(org.springframework.dao.EmptyResultDataAccessException e){
-			session.setAttribute("loggedin", false);
+		catch(NullPointerException e){
+			e.printStackTrace();
 			return "exec";
 		}
 		catch(Exception e){
-			e.printStackTrace();
-			session.setAttribute("loggedin", false);
 			return "fatal";
 		}
 	}
-	public String showProducts(){
-		session.setAttribute("username", uname);
-		System.out.println(session.getAttribute("username")); 
-		System.out.println(session.getAttribute("loggedin"));
-		request.setAttribute("uname", uname);
-		//return SUCCESS;
+	public String helps(){
 		try{
 			System.out.println(session.getAttribute("loggedin"));
 			if((Boolean)session.getAttribute("loggedin") == true)
 				return SUCCESS;
 			else
 				return "klogin";
-		}catch(Exception e){
+		}
+		catch(Exception e){
 			e.printStackTrace();
 			return ERROR;
 		}
@@ -106,95 +92,40 @@ public class UserAction extends ActionSupport implements ModelDriven, ServletReq
 			return ERROR;
 		}
 	}
-	
-	public void extractproduct(){
-		String uname = (String)session.getAttribute("username");
-		List<Product> lst=pdo.getProducts(uname);
-		try{
-			JSONArray jsonArray = new JSONArray(lst);
-			for(int i=0;i<jsonArray.length();i++)
-				System.out.println(jsonArray.get(i));
-			response.setContentType("application/json");
-			response.getWriter().print(jsonArray);
-		}
-		catch(Exception e){
-			
-		}
-	}
-
-	public void extractuser(){
-		String uname = (String)session.getAttribute("username");
-		List<Customer> lst=cdo.fetchData(uname);
-		Customer cst=lst.get(0);
-		try {
-			JSONArray jsonArray = new JSONArray(lst);
-			for(int i=0;i<jsonArray.length();i++)
-				System.out.println(jsonArray.get(i));
-			response.setContentType("application/json");
-			response.getWriter().print(jsonArray);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	public String networkcreate(){
-		String uname = (String)session.getAttribute("username");
-		networkname=request.getParameter("nname");
-		String networkid = request.getParameter("networkid");
-		System.out.println(networkname);
-		if(cdo.networkcreate(uname, networkname, networkid)==2){
-			addActionMessage("Details Saved");
-			return "enter";
-		}
-		else{
-			addActionError("Invalid Credentials");
-			return "error";
-		}
-	}
-	public void checknetworknames(){
-		String uname = (String)session.getAttribute("username");
-		List<Network> lst=cdo.checknetworknames(uname);
-		try{
-			JSONArray jsonArray = new JSONArray(lst);
-			for(int i=0;i<jsonArray.length();i++)
-				System.out.println(jsonArray.get(i));
-			response.setContentType("application/json");
-			response.getWriter().print(jsonArray);
-		}
-		catch(Exception e){
-			
-		}
-	}
-	public void checknetworknumber(){
-		String uname = (String)session.getAttribute("username");
-		List<Network> lst=cdo.checknetworknumber(uname);
-		try{
-			JSONArray jsonArray = new JSONArray(lst);
-			for(int i=0;i<jsonArray.length();i++)
-				System.out.println(jsonArray.get(i));
-			response.setContentType("application/json");
-			response.getWriter().print(jsonArray);
-		}
-		catch(Exception e){
-			
-		}
-	}
 	public void fetchmyproducts(){
 		String uname = (String)session.getAttribute("username");
-		List<Product> prdlst = cdo.fetchmyproducts(uname);
+		System.out.println("inside fetch products");
+		custObj.setEmail(uname);
+		List<Product> prdlst = custdao.fetchmyproducts(custObj);
 		try{
 			JSONArray jsonArray = new JSONArray(prdlst);
-			for(int i=0;i<jsonArray.length();i++)
-				System.out.println(jsonArray.get(i));
+			/*for(int i=0;i<jsonArray.length();i++)
+				System.out.println(jsonArray.get(i));*/
 			response.setContentType("application/json");
 			response.getWriter().print(jsonArray);
 		}catch(Exception e){
 			
 		}
 	}
+	
+	public void checknetworknames(){
+		String uname = (String)session.getAttribute("username");
+		List<Network> lst=custdao.checknetworknames();
+		try{
+			JSONArray jsonArray = new JSONArray(lst);
+			for(int i=0;i<jsonArray.length();i++)
+				System.out.println(jsonArray.get(i));
+			response.setContentType("application/json");
+			response.getWriter().print(jsonArray);
+		}
+		catch(Exception e){
+			
+		}
+	}
 	public void checknetworkid(){
 		String uname = (String)session.getAttribute("username");
-		List<Network> lst=cdo.checknetworkid(uname);
+		custObj.setEmail(uname);
+		List<Network> lst=custdao.checknetworkid(custObj);
 		try {
 			JSONArray jsonArray = new JSONArray(lst);
 			for(int i=0;i<jsonArray.length();i++)
@@ -207,18 +138,41 @@ public class UserAction extends ActionSupport implements ModelDriven, ServletReq
 		}
 	}
 	
-	public String changepassword(){
-			
+	
+	public void networkcreate(){
+		try{
 			String uname = (String)session.getAttribute("username");
-			String pwd=(String)request.getParameter("newpwd");
-			if((Boolean)session.getAttribute("loggedin") == true)
-			{			if(cdo.changepassword(uname,pwd)==2)
-							return SUCCESS;
-						else
-							return ERROR;
-			}else{
-				return "klogin";
+			String networkname=request.getParameter("nname");
+			System.out.println(networkname);
+			String networkid = request.getParameter("networkid");
+			nd.setAdmin(uname);
+			nd.setNetworkID(networkid);
+			nd.setNetworkName(networkname);
+			nd.setTimer("60");
+			if(custdao.networkcreate(nd)){
+				response.getWriter().print("success");
 			}
+			else{
+				response.getWriter().print("error");
+			}
+		}catch(Exception r){
+			r.printStackTrace();
+		}
+	}
+	public void checknetworknumber(){
+		String uname = (String)session.getAttribute("username");
+		custObj.setEmail(uname);
+		List<Network> lst=custdao.checknetworknumber(custObj);
+		try{
+			JSONArray jsonArray = new JSONArray(lst);
+			for(int i=0;i<jsonArray.length();i++)
+				System.out.println(jsonArray.get(i));
+			response.setContentType("application/json");
+			response.getWriter().print(jsonArray);
+		}
+		catch(Exception e){
+			
+		}
 	}
 	public String networkDetails(){
 		try{
@@ -232,20 +186,10 @@ public class UserAction extends ActionSupport implements ModelDriven, ServletReq
 			return ERROR;
 		}
 	}
-	public String helps(){
-		try{
-			System.out.println(session.getAttribute("loggedin"));
-			if((Boolean)session.getAttribute("loggedin") == true)
-				return SUCCESS;
-			else
-				return "klogin";
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return ERROR;
-		}
-	}
-	public String productDetails(){
+	public String showProducts(){
+		String uname=(String)session.getAttribute("username");
+		session.setAttribute("username", uname);
+		request.setAttribute("uname", uname);
 		try{
 			System.out.println(session.getAttribute("loggedin"));
 			if((Boolean)session.getAttribute("loggedin") == true)
@@ -257,12 +201,35 @@ public class UserAction extends ActionSupport implements ModelDriven, ServletReq
 			return ERROR;
 		}
 	}
-	public Object getModel() {
-		// TODO Auto-generated method stub
-		return null;
+	public void extractuser(){
+		String uname = (String)session.getAttribute("username");
+		custObj.setEmail(uname);
+		System.out.println(uname);
+		List<Customer> lst=custdao.fetchData(custObj);
+		Customer cst=lst.get(0);
+		try {
+			JSONArray jsonArray = new JSONArray(lst);
+			for(int i=0;i<jsonArray.length();i++)
+				System.out.println(jsonArray.get(i));
+			response.setContentType("application/json");
+			response.getWriter().print(jsonArray);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	public void setServletRequest(HttpServletRequest arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public String changepassword(){
+		String uname = (String)session.getAttribute("username");
+		String pwd=(String)request.getParameter("newpwd");
+		custObj.setEmail(uname);
+		custObj.setPassword(pwd);
+		if((Boolean)session.getAttribute("loggedin") == true)
+		{			if(custdao.changepassword(custObj))
+						return SUCCESS;
+					else
+						return ERROR;
+			}else{
+				return "klogin";
+			}
+}
 }

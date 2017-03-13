@@ -8,10 +8,12 @@
   <name>WebApp Maven Webapp</name>
   <url>http://maven.apache.org</url>
    <properties>
-  	<org.springframework-version>4.2.0.RELEASE</org.springframework-version>
+  		<org.springframework-version>4.2.0.RELEASE</org.springframework-version>
   	    <finalName>WebApp</finalName>
   </properties>
-  <build><plugins>
+
+  <build>
+  <plugins>
 <plugin>            
   <groupId>org.apache.maven.plugins</groupId>
   <artifactId>maven-war-plugin</artifactId>
@@ -40,38 +42,44 @@
 		</configuration>
 	</plugin>
 	<plugin>
-        <groupId>com.heroku.sdk</groupId>
-        <artifactId>heroku-maven-plugin</artifactId>
-        <version>1.0.0</version>
-      </plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
   </plugins>
 </build>
-  
   <dependencies>
+  <dependency>
+    <groupId>org.springframework.integration</groupId>
+    <artifactId>spring-integration-mongodb</artifactId>
+    <version>${org.springframework-version}</version>
+</dependency>
+<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongo-java-driver</artifactId>
+    <version>3.4.2</version>
+</dependency> 
   <dependency>
      <groupId>jstl</groupId>
      <artifactId>jstl</artifactId>
      <version>1.2</version>
      <scope>provided</scope>
  </dependency>
-  <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>jsp-api</artifactId>
-        <version>2.0</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
+  	    <dependency>
 	<groupId>taglibs</groupId>
 	<artifactId>standard</artifactId>
 	<version>1.1.2</version>
 </dependency>
-    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 <dependency>
     <groupId>javax.servlet</groupId>
     <artifactId>javax.servlet-api</artifactId>
     <version>3.1.0</version>
 </dependency>
-    
+    <dependency>  
+    <groupId>javax</groupId>    
+    <artifactId>javaee-web-api</artifactId>    
+    <version>7.0</version> <!-- Put here the version of your Java EE app, in my case 7.0 -->
+    <scope>provided</scope>
+</dependency>
     <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -120,25 +128,11 @@
 	<artifactId>struts2-json-plugin</artifactId>
 	<version>2.3.24.1</version>
 </dependency>
-	 <dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-web</artifactId>
-	<version>4.2.0.RELEASE</version>
-</dependency>
-	 
-		<dependency>
-	    	<groupId>mysql</groupId>
-    		<artifactId>mysql-connector-java</artifactId>
-    		<version>5.1.20</version>		
-		</dependency> 
-  
     <dependency>
 	<groupId>org.apache.struts</groupId>
 	<artifactId>struts2-spring-plugin</artifactId>
 	<version>2.3.24.1</version>
 </dependency>
-    
+  
   </dependencies>
-
-
-</project>
+  </project>
